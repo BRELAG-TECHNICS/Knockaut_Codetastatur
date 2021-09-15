@@ -1,0 +1,7 @@
+{
+  "elements":
+  [
+    { "type": "NumberSpinner", "name": "ID", "caption": "ID"},
+    { "type": "NumberSpinner", "name": "TimerInterval", "caption": "TimerInterval"}
+  ]
+}

@@ -1,0 +1,14 @@
+{
+	"id": "{BDB87D6B-BB11-EEF2-C2AB-F402A1B0B752}",
+	"name": "MaxFlexCodepanel",
+	"type": 3,
+	"vendor": "Brelag Schweiz AG",
+	"aliases": 
+	[
+		"Knockaut MaxFlex Codetastatur"
+	],
+	"parentRequirements": ["{C24CDA30-82EE-46E2-BAA0-13A088ACB5DB}"],
+	"childRequirements": [],
+	"implemented": ["{BA70E3E8-68D2-4E3B-8C64-BBB86F188473}"],
+	"prefix": "BRELAG"
+}
