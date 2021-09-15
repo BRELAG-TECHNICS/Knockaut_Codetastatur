@@ -22,7 +22,7 @@ class MaxFlexCodepanel extends IPSModule {
 
 		$this->RegisterTimer("ClearCodeTimer", 0, 'BRELAG_SetClearCodeTimer($_IPS[\'TARGET\']);');
 		$this->RegisterTimer("wrongCodeTimer", 0, 'BRELAG_ResetWronPWLED($_IPS[\'TARGET\']);');
-		$this->RegisterTimer("checkSecurityMode", 15000, 'BRELAG_CheckSecurityMode($_IPS[\'TARGET\']);');
+		//$this->RegisterTimer("checkSecurityMode", 15000, 'BRELAG_CheckSecurityMode($_IPS[\'TARGET\']);');
 
 		$this->ConnectParent("{1252F612-CF3F-4995-A152-DA7BE31D4154}"); //DominoSwiss eGate
 	}
@@ -172,30 +172,6 @@ class MaxFlexCodepanel extends IPSModule {
 		$this->SetTimerInterval("wrongCodeTimer", 0);
 		SetValue($this->GetIDForIdent("CODE"), 0);
 		$this->SwitchLED(7, self::LED_OFF);
-	}
-
-	public function CheckSecurityMode() {
-		$securityGUID = "{17433113-1A92-45B3-F250-B5E426040E64}";
-		$securityInstance = IPS_GetInstanceListByModuleID($securityGUID);
-		$securityInstanceId = $securityInstance[0];
-		$securityEnterPasswordId = IPS_GetObjectIDByIdent("Password", $securityInstanceId);
-		$securityModus = IPS_GetObjectIDByIdent("Mode", $securityInstanceId);
-
-		$mode = GetValue($this->GetIDForIdent("SECMODE"));
-
-		if($mode != $securityModus) {
-			SetValue($this->GetIDForIdent("SECMODE"), GetValue($securityModus));
-			$LEDnumber = $securityModus + 1;
-			if($securityModus == 0) {
-				$this->SwitchLED($LEDnumber, 1);
-			}
-			if($securityModus == 1) {
-				$this->SwitchLED($LEDnumber, 1);
-			}
-			if($securityModus == 2) {
-				$this->SwitchLED($LEDnumber, 1);
-			}
-		}
 	}
 
 	/* 
