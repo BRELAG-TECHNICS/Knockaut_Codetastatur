@@ -18,13 +18,19 @@ class MaxFlexCodepanel extends IPSModule {
 
 		$this->RegisterVariableInteger("CODE", "Code", "", 1);
 		$this->RegisterVariableBoolean("CODEOK", "Ist Code Ok?", "", 2);
-		$this->RegisterVariableString("SECMODE", "Aktueller Modus", "", 3);
+		$this->RegisterVariableInteger("SECMODE", "Aktueller Modus", "", 3);
 
 		$this->RegisterTimer("ClearCodeTimer", 0, 'BRELAG_SetClearCodeTimer($_IPS[\'TARGET\']);');
 		$this->RegisterTimer("wrongCodeTimer", 0, 'BRELAG_ResetWronPWLED($_IPS[\'TARGET\']);');
-		//$this->RegisterTimer("checkSecurityMode", 15000, 'BRELAG_CheckSecurityMode($_IPS[\'TARGET\']);');
 
 		$this->ConnectParent("{1252F612-CF3F-4995-A152-DA7BE31D4154}"); //DominoSwiss eGate
+
+		$securityGUID = "{17433113-1A92-45B3-F250-B5E426040E64}";
+		$securityInstance = IPS_GetInstanceListByModuleID($securityGUID);
+		$securityInstanceId = $securityInstance[0];
+		$securityModusId = IPS_GetObjectIDByIdent("Mode", $securityInstanceId);
+		$this->RegisterSecurityMode($securityModusId);
+		
 	}
 
 	public function Destroy() {
@@ -174,9 +180,6 @@ class MaxFlexCodepanel extends IPSModule {
 		$this->SwitchLED(7, self::LED_OFF);
 	}
 
-	/* 
-		Um beim MaxFlex eine LED einzuschalten. Funktioniert nur wen der MaxFlex eine Stromspeisung beseitzt.
-	*/
 	public function SetLED(int $Value){
 		$this->SendCommand(1, 43, $Value, 3);
 	}
@@ -187,5 +190,49 @@ class MaxFlexCodepanel extends IPSModule {
 		return $this->SendDataToParent(json_encode(Array("DataID" => "{C24CDA30-82EE-46E2-BAA0-13A088ACB5DB}", "Instruction" => $Instruction, "ID" => $id, "Command" => $Command, "Value" => $Value, "Priority" => $Priority)));
 	}
 
+	public function MessageSink($TimeStamp, $SenderID, $Message, $Data)
+    {
+        $securityGUID = "{17433113-1A92-45B3-F250-B5E426040E64}";
+		$securityInstance = IPS_GetInstanceListByModuleID($securityGUID);
+		$securityInstanceId = $securityInstance[0];
+		$securityEnterPasswordId = IPS_GetObjectIDByIdent("Password", $securityInstanceId);
+		$securityModusId = IPS_GetObjectIDByIdent("Mode", $securityInstanceId);
+		$securityModus = GetValue($securityModusId);
+		$mode = GetValue($this->GetIDForIdent("SECMODE"));
+
+        switch ($SenderID) {
+            case $securityModusId:
+                if($mode != $securityModus) {
+					SetValue($this->GetIDForIdent("SECMODE"), GetValue($securityModusId));
+					$LEDnumber = $securityModus + 1;
+					switch($securityModus) {
+						case 0:
+							$this->SwitchLED($LEDnumber, self::LED_ON);
+							$this->SwitchLED(2, self::LED_OFF);
+							$this->SwitchLED(3, self::LED_OFF);
+						break;
+		
+						case 1:
+							$this->SwitchLED($LEDnumber, self::LED_ON);
+							$this->SwitchLED(1, self::LED_OFF);
+							$this->SwitchLED(3, self::LED_OFF);
+						break;
+						
+						case 2:
+							$this->SwitchLED($LEDnumber, self::LED_ON);
+							$this->SwitchLED(1, self::LED_OFF);
+							$this->SwitchLED(2, self::LED_OFF);
+						break;
+					}
+				}
+            break;
+        }
+    }
+
+	public function RegisterSecurityMode(int $ID) {
+		$this->RegisterMessage($ID, 10603 /* VM_UPDATE */);
+	}
+
 }
+
 ?>
