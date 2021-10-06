@@ -131,7 +131,7 @@ class MaxFlexCodepanel extends IPSModule {
 	
 						case 8:
 							if($codeOK) {
-								if($countProfileMode >= 5) {
+								if($countProfileMode >= 6) {
 									SetValue($securityEnterPasswordId, $securityPassword);
 									SetValue($securityModus, 5);
 									SetValue($this->GetIDForIdent("CODE"), 0);
@@ -151,7 +151,7 @@ class MaxFlexCodepanel extends IPSModule {
 	
 						case 16:
 							if($codeOK) {
-								if($countProfileMode >= 6) {
+								if($countProfileMode >= 7) {
 									SetValue($securityEnterPasswordId, $securityPassword);
 									SetValue($securityModus, 6);
 									SetValue($this->GetIDForIdent("CODE"), 0);
@@ -171,7 +171,7 @@ class MaxFlexCodepanel extends IPSModule {
 	
 						case 32:
 							if($codeOK) {
-								if($countProfileMode >= 7) {
+								if($countProfileMode >= 8) {
 									SetValue($securityEnterPasswordId, $securityPassword);
 									SetValue($securityModus, 7);
 									SetValue($this->GetIDForIdent("CODE"), 0);
