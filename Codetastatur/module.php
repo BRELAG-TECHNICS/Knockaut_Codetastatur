@@ -64,6 +64,8 @@ class MaxFlexCodepanel extends IPSModule {
 			// Hole aus der Konfiguration den Timer interval und rechne in Millisekunden um.	
 				$timerintervalSecond = $this->ReadPropertyInteger("TimerInterval");
 				$timerintervalMillisecond = $timerintervalSecond * 1000;
+				$arrayProfileMode = IPS_GetVariableProfile("BRELAG.AlarmSystemMode_ObjectID" . $securityInstanceId)["Associations"];
+				$countProfileMode = count($arrayProfileMode);
 
 			$value = $data->Values->Value;
 
@@ -82,6 +84,9 @@ class MaxFlexCodepanel extends IPSModule {
 								$this->SwitchLED(1, self::LED_ON);
 								$this->SwitchLED(2, self::LED_OFF);
 								$this->SwitchLED(3, self::LED_OFF);
+								$this->SwitchLED(4, self::LED_OFF);
+								$this->SwitchLED(5, self::LED_OFF);
+								$this->SwitchLED(6, self::LED_OFF);
 							} else{
 								$typedCode .= 1;
 								SetValue($this->GetIDForIdent("CODE"), $typedCode);
@@ -97,6 +102,9 @@ class MaxFlexCodepanel extends IPSModule {
 								$this->SwitchLED(2, self::LED_ON);
 								$this->SwitchLED(1, self::LED_OFF);
 								$this->SwitchLED(3, self::LED_OFF);
+								$this->SwitchLED(4, self::LED_OFF);
+								$this->SwitchLED(5, self::LED_OFF);
+								$this->SwitchLED(6, self::LED_OFF);
 							} else{
 								$typedCode .= 2;
 								SetValue($this->GetIDForIdent("CODE"), $typedCode);
@@ -112,6 +120,9 @@ class MaxFlexCodepanel extends IPSModule {
 								$this->SwitchLED(3, self::LED_ON);
 								$this->SwitchLED(1, self::LED_OFF);
 								$this->SwitchLED(2, self::LED_OFF);
+								$this->SwitchLED(4, self::LED_OFF);
+								$this->SwitchLED(5, self::LED_OFF);
+								$this->SwitchLED(6, self::LED_OFF);
 							} else{
 								$typedCode .= 3;
 								SetValue($this->GetIDForIdent("CODE"), $typedCode);
@@ -119,18 +130,63 @@ class MaxFlexCodepanel extends IPSModule {
 						break;
 	
 						case 8:
-							$typedCode .= 4;
-							SetValue($this->GetIDForIdent("CODE"), $typedCode);
+							if($codeOK) {
+								if($countProfileMode >= 5) {
+									SetValue($securityEnterPasswordId, $securityPassword);
+									SetValue($securityModus, 5);
+									SetValue($this->GetIDForIdent("CODE"), 0);
+									SetValue($this->GetIDForIdent("CODEOK"), false);
+									$this->SwitchLED(4, self::LED_ON);
+									$this->SwitchLED(1, self::LED_OFF);
+									$this->SwitchLED(2, self::LED_OFF);
+									$this->SwitchLED(3, self::LED_OFF);
+									$this->SwitchLED(5, self::LED_OFF);
+									$this->SwitchLED(6, self::LED_OFF);
+								}
+							} else{
+								$typedCode .= 4;
+								SetValue($this->GetIDForIdent("CODE"), $typedCode);
+							}
 						break;
 	
 						case 16:
-							$typedCode .= 5;
-							SetValue($this->GetIDForIdent("CODE"), $typedCode);
+							if($codeOK) {
+								if($countProfileMode >= 6) {
+									SetValue($securityEnterPasswordId, $securityPassword);
+									SetValue($securityModus, 6);
+									SetValue($this->GetIDForIdent("CODE"), 0);
+									SetValue($this->GetIDForIdent("CODEOK"), false);
+									$this->SwitchLED(5, self::LED_ON);
+									$this->SwitchLED(1, self::LED_OFF);
+									$this->SwitchLED(2, self::LED_OFF);
+									$this->SwitchLED(3, self::LED_OFF);
+									$this->SwitchLED(4, self::LED_OFF);
+									$this->SwitchLED(6, self::LED_OFF);
+								}
+							} else{
+								$typedCode .= 5;
+								SetValue($this->GetIDForIdent("CODE"), $typedCode);
+							}
 						break;
 	
 						case 32:
-							$typedCode .= 6;
-							SetValue($this->GetIDForIdent("CODE"), $typedCode);
+							if($codeOK) {
+								if($countProfileMode >= 7) {
+									SetValue($securityEnterPasswordId, $securityPassword);
+									SetValue($securityModus, 7);
+									SetValue($this->GetIDForIdent("CODE"), 0);
+									SetValue($this->GetIDForIdent("CODEOK"), false);
+									$this->SwitchLED(6, self::LED_ON);
+									$this->SwitchLED(1, self::LED_OFF);
+									$this->SwitchLED(2, self::LED_OFF);
+									$this->SwitchLED(3, self::LED_OFF);
+									$this->SwitchLED(4, self::LED_OFF);
+									$this->SwitchLED(5, self::LED_OFF);
+								}
+							} else{
+								$typedCode .= 6;
+								SetValue($this->GetIDForIdent("CODE"), $typedCode);
+							}
 						break;
 	
 						case 64:
