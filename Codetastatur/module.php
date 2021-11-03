@@ -66,6 +66,7 @@ class MaxFlexCodepanel extends IPSModule {
 				$timerintervalMillisecond = $timerintervalSecond * 1000;
 				$arrayConfigurationFormJSON = IPS_GetConfigurationForm($securityInstanceId);
 				$arrayConfigurationForm = json_decode($arrayConfigurationFormJSON, true);
+				$arrayConfigurationFormMode = $arrayConfigurationForm['elements'][2]['columns'][1]['edit']['options'];
 
 			$value = $data->Values->Value;
 
@@ -96,8 +97,8 @@ class MaxFlexCodepanel extends IPSModule {
 						case 2: // Nummer 2 und Bereich 1
 							if($codeOK) {
 								SetValue($securityEnterPasswordId, $securityPassword);
-								foreach($arrayConfigurationForm as $configurationFormMode) {
-									if($configurationFormMode['value'] == 1) {
+								foreach($arrayConfigurationFormMode as $configurationFormModeValue) {
+									if($configurationFormModeValue['value'] == 1) {
 										SetValue($securityModus, 1); // Change Mode
 										$this->SwitchLED(2, self::LED_ON);
 										$this->SwitchLED(1, self::LED_OFF);
