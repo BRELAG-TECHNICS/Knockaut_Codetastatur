@@ -208,9 +208,9 @@ class MaxFlexCodepanel extends IPSModule {
             case $securityModusId:
 				foreach($arrayConfigurationFormMode as $arrayConfigurationFormModeValue) {
 					if($arrayConfigurationFormModeValue['value'] == $securityModus) {
-						SetValue($this->GetIDForIdent("SECMODE"), $securityModus);
 						$currentSort = $arrayConfigurationFormModeValue['sort'];
 						$LEDnumber = $currentSort;
+						SetValue($this->GetIDForIdent("SECMODE"), $securityModus);
 						for($i = 1; $i <= 6 ; $i++){
 							if($i == $LEDnumber) {
 								$this->SwitchLED($LEDnumber, self::LED_ON);
