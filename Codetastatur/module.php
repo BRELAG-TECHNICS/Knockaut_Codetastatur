@@ -206,18 +206,18 @@ class MaxFlexCodepanel extends IPSModule {
 
         switch ($SenderID) {
             case $securityModusId:
-                if($mode != $arrayConfigurationFormMode['value']) {
-					SetValue($this->GetIDForIdent("SECMODE"), GetValue($securityModusId));
-					$LEDnumber = $arrayConfigurationFormMode['sort'] + 1;
-
-					for($i = 1; $i <= 6 ; $i++){
-						if($i == $LEDnumber) {
-							$this->SwitchLED($LEDnumber, self::LED_ON);
-						} else {
-							$this->SwitchLED($LEDnumber, self::LED_OFF);
+				foreach($arrayConfigurationFormMode as $arrayConfigurationFormModeValue) {
+					if($mode != $arrayConfigurationFormModeValue['value']) {
+						SetValue($this->GetIDForIdent("SECMODE"), GetValue($securityModusId));
+						$LEDnumber = $arrayConfigurationFormMode['sort'] + 1;
+						for($i = 1; $i <= 6 ; $i++){
+							if($i == $LEDnumber) {
+								$this->SwitchLED($LEDnumber, self::LED_ON);
+							} else {
+								$this->SwitchLED($LEDnumber, self::LED_OFF);
+							}
 						}
 					}
-
 				}
             break;
         }
@@ -250,5 +250,17 @@ class MaxFlexCodepanel extends IPSModule {
 		}
 	}
 }
+
+/*
+
+for($i = 1; $i <= 6 ; $i++){
+						if($i == $LEDnumber) {
+							$this->SwitchLED($LEDnumber, self::LED_ON);
+						} else {
+							$this->SwitchLED($LEDnumber, self::LED_OFF);
+						}
+					}
+
+*/
 
 ?>
