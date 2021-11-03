@@ -78,7 +78,7 @@ class MaxFlexCodepanel extends IPSModule {
 					switch($value) {
 						case 1: // Nummer 1 und Aus
 							if($codeOK) {
-								$this->SetSecurityMode($securityEnterPasswordId, $securityPassword, $securityModus, $arrayConfigurationFormMode, 0);
+								$this->SetSecurityMode($securityEnterPasswordId, $securityPassword, $securityModus, $arrayConfigurationFormMode, 0, 1);
 								$this->DeleteCode($securityEnterPasswordId);
 							} else{
 								$this->TypeCode(1, $typedCode);
@@ -87,7 +87,7 @@ class MaxFlexCodepanel extends IPSModule {
 	
 						case 2: // Nummer 2 und Bereich 1
 							if($codeOK) {
-								$this->SetSecurityMode($securityEnterPasswordId, $securityPassword, $securityModus, $arrayConfigurationFormMode, 1);
+								$this->SetSecurityMode($securityEnterPasswordId, $securityPassword, $securityModus, $arrayConfigurationFormMode, 1, 2);
 								$this->DeleteCode($securityEnterPasswordId);
 							} else{
 								$this->TypeCode(2, $typedCode);
@@ -96,7 +96,7 @@ class MaxFlexCodepanel extends IPSModule {
 	
 						case 4: // Nummer 3 und Bereich 2
 							if($codeOK) {
-								$this->SetSecurityMode($securityEnterPasswordId, $securityPassword, $securityModus, $arrayConfigurationFormMode, 2);
+								$this->SetSecurityMode($securityEnterPasswordId, $securityPassword, $securityModus, $arrayConfigurationFormMode, 2, 3);
 								$this->DeleteCode($securityEnterPasswordId);
 							} else{
 								$this->TypeCode(3, $typedCode);
@@ -105,7 +105,7 @@ class MaxFlexCodepanel extends IPSModule {
 	
 						case 8: // Nummer 4
 							if($codeOK) {
-								$this->SetSecurityMode($securityEnterPasswordId, $securityPassword, $securityModus, $arrayConfigurationFormMode, 3);
+								$this->SetSecurityMode($securityEnterPasswordId, $securityPassword, $securityModus, $arrayConfigurationFormMode, 3, 4);
 								$this->DeleteCode($securityEnterPasswordId);
 							} else{
 								$this->TypeCode(4, $typedCode);
@@ -114,7 +114,7 @@ class MaxFlexCodepanel extends IPSModule {
 	
 						case 16: // Nummer 5
 							if($codeOK) {
-								$this->SetSecurityMode($securityEnterPasswordId, $securityPassword, $securityModus, $arrayConfigurationFormMode, 4);
+								$this->SetSecurityMode($securityEnterPasswordId, $securityPassword, $securityModus, $arrayConfigurationFormMode, 4, 5);
 								$this->DeleteCode($securityEnterPasswordId);
 							} else{
 								$this->TypeCode(5, $typedCode);
@@ -123,7 +123,7 @@ class MaxFlexCodepanel extends IPSModule {
 	
 						case 32: // Nummer 6
 							if($codeOK) {
-								$this->SetSecurityMode($securityEnterPasswordId, $securityPassword, $securityModus, $arrayConfigurationFormMode, 5);
+								$this->SetSecurityMode($securityEnterPasswordId, $securityPassword, $securityModus, $arrayConfigurationFormMode, 5, 6);
 								$this->DeleteCode($securityEnterPasswordId);
 							} else{
 								$this->TypeCode(6, $typedCode);
@@ -166,7 +166,7 @@ class MaxFlexCodepanel extends IPSModule {
 	}
 
 	private function SwitchLED(int $LEDnumber, int $State) {
-		$this->SetLED($LEDnumber + $State * 8);
+		$this->SetLED($LEDnumber - 1 + $State * 8);
 	}
 
 	private function wrongCode() {
@@ -206,20 +206,14 @@ class MaxFlexCodepanel extends IPSModule {
 
         switch ($SenderID) {
             case $securityModusId:
-				foreach($arrayConfigurationFormMode as $arrayConfigurationFormModeValue) {
+				/*foreach($arrayConfigurationFormMode as $arrayConfigurationFormModeValue) {
 					$currentSort = $arrayConfigurationFormModeValue['sort'];
 					$LEDnumber = $currentSort;
 					if($arrayConfigurationFormModeValue['value'] == $securityModus) {
 						SetValue($this->GetIDForIdent("SECMODE"), $securityModus);
-						for($i = 1; $i <= 6 ; $i++){
-							if($i == $LEDnumber) {
-								$this->SwitchLED($LEDnumber, self::LED_ON);
-							} else {
-								$this->SwitchLED($LEDnumber, self::LED_OFF);
-							}
-						}
+						
 					}
-				}
+				}*/
             break;
         }
     }
@@ -241,12 +235,19 @@ class MaxFlexCodepanel extends IPSModule {
 	 * @param array $arrayConfigurationFormMode ProfileID array.
 	 * @param integer $sort Mode position.
 	 */
-	private function SetSecurityMode($securityEnterPasswordId, $securityPassword, $securityModus, $arrayConfigurationFormMode, $sort) {
+	private function SetSecurityMode($securityEnterPasswordId, $securityPassword, $securityModus, $arrayConfigurationFormMode, $sort, $LEDnumber) {
 		SetValue($securityEnterPasswordId, $securityPassword);
 		foreach($arrayConfigurationFormMode as $configurationFormModeValue) {
 			if($configurationFormModeValue['sort'] == $sort) {
 				$modeValue = $configurationFormModeValue['value'];
 				SetValue($securityModus, $modeValue); // Change Mode
+				for($i = 1; $i <= 6 ; $i++){
+					if($i == $LEDnumber) {
+						$this->SwitchLED($LEDnumber, self::LED_ON);
+					} else {
+						$this->SwitchLED($LEDnumber, self::LED_OFF);
+					}
+				}
 			}
 		}
 	}
