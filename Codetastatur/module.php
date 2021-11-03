@@ -166,7 +166,7 @@ class MaxFlexCodepanel extends IPSModule {
 	}
 
 	private function SwitchLED(int $LEDnumber, int $State) {
-		$this->SetLED($LEDnumber - 1 + $State * 8);
+		$this->SetLED($LEDnumber + $State * 8);
 	}
 
 	private function wrongCode() {
