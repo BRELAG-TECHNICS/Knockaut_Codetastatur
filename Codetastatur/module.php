@@ -166,7 +166,7 @@ class MaxFlexCodepanel extends IPSModule {
 	}
 
 	private function SwitchLED(int $LEDnumber, int $State) {
-		$this->SetLED($LEDnumber + $State * 8);
+		$this->SetLED($LEDnumber -1 + $State * 8);
 	}
 
 	private function wrongCode() {
@@ -213,9 +213,9 @@ class MaxFlexCodepanel extends IPSModule {
 						$LEDnumber = $currentSort;
 						$arrayLED = [1, 2, 3, 4, 5, 6];
 						foreach($arrayLED as $LED) {
-							$this->SwitchLED($LED -1, self::LED_OFF);
+							$this->SwitchLED($LED, self::LED_OFF);
 						}
-						$this->SwitchLED($LEDnumber, self::LED_ON);
+						$this->SwitchLED($LEDnumber + 1, self::LED_ON);
 					}
 				}
             break;
