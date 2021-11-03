@@ -85,9 +85,9 @@ class MaxFlexCodepanel extends IPSModule {
 								$this->SwitchLED(1, self::LED_ON);
 								$this->SwitchLED(2, self::LED_OFF);
 								$this->SwitchLED(3, self::LED_OFF);
-								//$this->SwitchLED(4, self::LED_OFF);
-								//$this->SwitchLED(5, self::LED_OFF);
-								//$this->SwitchLED(6, self::LED_OFF);
+								$this->SwitchLED(4, self::LED_OFF);
+								$this->SwitchLED(5, self::LED_OFF);
+								$this->SwitchLED(6, self::LED_OFF);
 							} else{
 								$typedCode .= 1;
 								SetValue($this->GetIDForIdent("CODE"), $typedCode);
@@ -103,12 +103,11 @@ class MaxFlexCodepanel extends IPSModule {
 										$this->SwitchLED(2, self::LED_ON);
 										$this->SwitchLED(1, self::LED_OFF);
 										$this->SwitchLED(3, self::LED_OFF);
-										//$this->SwitchLED(4, self::LED_OFF);
-										//$this->SwitchLED(5, self::LED_OFF);
-										//$this->SwitchLED(6, self::LED_OFF);
+										$this->SwitchLED(4, self::LED_OFF);
+										$this->SwitchLED(5, self::LED_OFF);
+										$this->SwitchLED(6, self::LED_OFF);
 									}
 								}
-								
 								SetValue($this->GetIDForIdent("CODE"), 0);
 								SetValue($this->GetIDForIdent("CODEOK"), false);
 							} else{
@@ -120,15 +119,19 @@ class MaxFlexCodepanel extends IPSModule {
 						case 4: // Nummer 3 und Bereich 2
 							if($codeOK) {
 								SetValue($securityEnterPasswordId, $securityPassword);
-								SetValue($securityModus, 2);
+								foreach($arrayConfigurationFormMode as $configurationFormModeValue) {
+									if($configurationFormModeValue['value'] == 2) {
+										SetValue($securityModus, 2); // Change Mode
+										$this->SwitchLED(3, self::LED_ON);
+										$this->SwitchLED(1, self::LED_OFF);
+										$this->SwitchLED(2, self::LED_OFF);
+										$this->SwitchLED(4, self::LED_OFF);
+										$this->SwitchLED(5, self::LED_OFF);
+										$this->SwitchLED(6, self::LED_OFF);
+									}
+								}
 								SetValue($this->GetIDForIdent("CODE"), 0);
 								SetValue($this->GetIDForIdent("CODEOK"), false);
-								$this->SwitchLED(3, self::LED_ON);
-								$this->SwitchLED(1, self::LED_OFF);
-								$this->SwitchLED(2, self::LED_OFF);
-								//$this->SwitchLED(4, self::LED_OFF);
-								//$this->SwitchLED(5, self::LED_OFF);
-								//$this->SwitchLED(6, self::LED_OFF);
 							} else{
 								$typedCode .= 3;
 								SetValue($this->GetIDForIdent("CODE"), $typedCode);
@@ -136,17 +139,69 @@ class MaxFlexCodepanel extends IPSModule {
 						break;
 	
 						case 8: // Nummer 4
+							if($codeOK) {
+								SetValue($securityEnterPasswordId, $securityPassword);
+								foreach($arrayConfigurationFormMode as $configurationFormModeValue) {
+									if($configurationFormModeValue['value'] == 3) {
+										SetValue($securityModus, 2); // Change Mode
+										$this->SwitchLED(4, self::LED_ON);
+										$this->SwitchLED(1, self::LED_OFF);
+										$this->SwitchLED(2, self::LED_OFF);
+										$this->SwitchLED(3, self::LED_OFF);
+										$this->SwitchLED(5, self::LED_OFF);
+										$this->SwitchLED(6, self::LED_OFF);
+									}
+								}
+								SetValue($this->GetIDForIdent("CODE"), 0);
+								SetValue($this->GetIDForIdent("CODEOK"), false);
+							} else{
+								$typedCode .= 4;
 								SetValue($this->GetIDForIdent("CODE"), $typedCode);
+							}
 						break;
 	
 						case 16: // Nummer 5
+							if($codeOK) {
+								SetValue($securityEnterPasswordId, $securityPassword);
+								foreach($arrayConfigurationFormMode as $configurationFormModeValue) {
+									if($configurationFormModeValue['value'] == 4) {
+										SetValue($securityModus, 2); // Change Mode
+										$this->SwitchLED(5, self::LED_ON);
+										$this->SwitchLED(1, self::LED_OFF);
+										$this->SwitchLED(2, self::LED_OFF);
+										$this->SwitchLED(3, self::LED_OFF);
+										$this->SwitchLED(4, self::LED_OFF);
+										$this->SwitchLED(6, self::LED_OFF);
+									}
+								}
+								SetValue($this->GetIDForIdent("CODE"), 0);
+								SetValue($this->GetIDForIdent("CODEOK"), false);
+							} else{
 								$typedCode .= 5;
 								SetValue($this->GetIDForIdent("CODE"), $typedCode);
+							}
 						break;
 	
 						case 32: // Nummer 6
+							if($codeOK) {
+								SetValue($securityEnterPasswordId, $securityPassword);
+								foreach($arrayConfigurationFormMode as $configurationFormModeValue) {
+									if($configurationFormModeValue['value'] == 5) {
+										SetValue($securityModus, 2); // Change Mode
+										$this->SwitchLED(6, self::LED_ON);
+										$this->SwitchLED(1, self::LED_OFF);
+										$this->SwitchLED(2, self::LED_OFF);
+										$this->SwitchLED(3, self::LED_OFF);
+										$this->SwitchLED(4, self::LED_OFF);
+										$this->SwitchLED(5, self::LED_OFF);
+									}
+								}
+								SetValue($this->GetIDForIdent("CODE"), 0);
+								SetValue($this->GetIDForIdent("CODEOK"), false);
+							} else{
 								$typedCode .= 6;
 								SetValue($this->GetIDForIdent("CODE"), $typedCode);
+							}
 						break;
 	
 						case 64: // Enter
