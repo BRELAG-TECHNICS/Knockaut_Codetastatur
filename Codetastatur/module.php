@@ -97,7 +97,7 @@ class MaxFlexCodepanel extends IPSModule {
 						case 2: // Nummer 2 und Bereich 1
 							if($codeOK) {
 								SetValue($securityEnterPasswordId, $securityPassword);
-								$this->SetSecurityMode($arrayConfigurationFormMode, 1, 2);
+								$this->SetSecurityMode($securityModus, $arrayConfigurationFormMode, 1, 2);
 								SetValue($this->GetIDForIdent("CODE"), 0);
 								SetValue($this->GetIDForIdent("CODEOK"), false);
 							} else{
@@ -287,7 +287,7 @@ class MaxFlexCodepanel extends IPSModule {
 		$this->RegisterMessage($ID, 10603 /* VM_UPDATE */);
 	}
 
-	public function SetSecurityMode($arrayConfigurationFormMode, $sort, $LED) {
+	public function SetSecurityMode($securityModus, $arrayConfigurationFormMode, $sort, $LED) {
 		foreach($arrayConfigurationFormMode as $configurationFormModeValue) {
 			if($configurationFormModeValue['sort'] == $sort) {
 				$modeValue = $configurationFormModeValue['value'];
