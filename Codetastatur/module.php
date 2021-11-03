@@ -180,11 +180,11 @@ class MaxFlexCodepanel extends IPSModule {
 		$this->SetTimerInterval("ClearCodeTimer", 0);
 	}
 
-	public function SwitchLED(int $LEDnumber, int $State) {
+	private function SwitchLED(int $LEDnumber, int $State) {
 		$this->SetLED($LEDnumber - 1 + $State * 8);
 	}
 
-	public function wrongCode() {
+	private function wrongCode() {
 		$this->SetLED(22);
 		$this->SetTimerInterval("wrongCodeTimer", 2000);
 	}
@@ -195,7 +195,7 @@ class MaxFlexCodepanel extends IPSModule {
 		$this->SwitchLED(7, self::LED_OFF);
 	}
 
-	public function SetLED(int $Value){
+	private function SetLED(int $Value){
 		$this->SendCommand(1, 43, $Value, 3);
 	}
 
@@ -244,11 +244,11 @@ class MaxFlexCodepanel extends IPSModule {
         }
     }
 
-	public function RegisterSecurityMode(int $ID) {
+	private function RegisterSecurityMode(int $ID) {
 		$this->RegisterMessage($ID, 10603 /* VM_UPDATE */);
 	}
 
-	public function SetSecurityMode($securityModus, $arrayConfigurationFormMode, $sort, $LED) {
+	private function SetSecurityMode($securityModus, $arrayConfigurationFormMode, $sort, $LED) {
 		foreach($arrayConfigurationFormMode as $configurationFormModeValue) {
 			if($configurationFormModeValue['sort'] == $sort) {
 				$modeValue = $configurationFormModeValue['value'];
@@ -261,22 +261,6 @@ class MaxFlexCodepanel extends IPSModule {
 			}
 		}
 	}
-
-								/*
-								foreach($arrayConfigurationFormMode as $configurationFormModeValue) {
-									if($configurationFormModeValue['sort'] == 1) {
-										$modeValue = $configurationFormModeValue['value'];
-										SetValue($securityModus, $modeValue); // Change Mode
-										$this->SwitchLED(2, self::LED_ON);
-										$this->SwitchLED(1, self::LED_OFF);
-										$this->SwitchLED(3, self::LED_OFF);
-										$this->SwitchLED(4, self::LED_OFF);
-										$this->SwitchLED(5, self::LED_OFF);
-										$this->SwitchLED(6, self::LED_OFF);
-									}
-								}
-								*/
-
 }
 
 ?>
