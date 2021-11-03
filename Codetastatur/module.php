@@ -97,18 +97,7 @@ class MaxFlexCodepanel extends IPSModule {
 						case 2: // Nummer 2 und Bereich 1
 							if($codeOK) {
 								SetValue($securityEnterPasswordId, $securityPassword);
-								foreach($arrayConfigurationFormMode as $configurationFormModeValue) {
-									if($configurationFormModeValue['sort'] == 1) {
-										$modeValue = $configurationFormModeValue['value'];
-										SetValue($securityModus, $modeValue); // Change Mode
-										$this->SwitchLED(2, self::LED_ON);
-										$this->SwitchLED(1, self::LED_OFF);
-										$this->SwitchLED(3, self::LED_OFF);
-										$this->SwitchLED(4, self::LED_OFF);
-										$this->SwitchLED(5, self::LED_OFF);
-										$this->SwitchLED(6, self::LED_OFF);
-									}
-								}
+								$this->SetSecurityMode($arrayConfigurationFormMode, 1, 2);
 								SetValue($this->GetIDForIdent("CODE"), 0);
 								SetValue($this->GetIDForIdent("CODEOK"), false);
 							} else{
@@ -189,18 +178,7 @@ class MaxFlexCodepanel extends IPSModule {
 						case 32: // Nummer 6
 							if($codeOK) {
 								SetValue($securityEnterPasswordId, $securityPassword);
-								foreach($arrayConfigurationFormMode as $configurationFormModeValue) {
-									if($configurationFormModeValue['sort'] == 5) {
-										$modeValue = $configurationFormModeValue['value'];
-										SetValue($securityModus, $modeValue); // Change Mode
-										$this->SwitchLED(6, self::LED_ON);
-										$this->SwitchLED(1, self::LED_OFF);
-										$this->SwitchLED(2, self::LED_OFF);
-										$this->SwitchLED(3, self::LED_OFF);
-										$this->SwitchLED(4, self::LED_OFF);
-										$this->SwitchLED(5, self::LED_OFF);
-									}
-								}
+								
 								SetValue($this->GetIDForIdent("CODE"), 0);
 								SetValue($this->GetIDForIdent("CODEOK"), false);
 							} else{
@@ -308,6 +286,35 @@ class MaxFlexCodepanel extends IPSModule {
 	public function RegisterSecurityMode(int $ID) {
 		$this->RegisterMessage($ID, 10603 /* VM_UPDATE */);
 	}
+
+	public function SetSecurityMode($arrayConfigurationFormMode, $sort, $LED) {
+		foreach($arrayConfigurationFormMode as $configurationFormModeValue) {
+			if($configurationFormModeValue['sort'] == $sort) {
+				$modeValue = $configurationFormModeValue['value'];
+				SetValue($securityModus, $modeValue); // Change Mode
+				$arrayLED = [1, 2, 3, 4, 5, 6];
+				foreach($arrayLED as $buttonNumber) {
+					$this->SwitchLED($buttonNumber, self::LED_OFF);
+				}
+				$this->SwitchLED($LED, self::LED_ON);
+			}
+		}
+	}
+
+								/*
+								foreach($arrayConfigurationFormMode as $configurationFormModeValue) {
+									if($configurationFormModeValue['sort'] == 1) {
+										$modeValue = $configurationFormModeValue['value'];
+										SetValue($securityModus, $modeValue); // Change Mode
+										$this->SwitchLED(2, self::LED_ON);
+										$this->SwitchLED(1, self::LED_OFF);
+										$this->SwitchLED(3, self::LED_OFF);
+										$this->SwitchLED(4, self::LED_OFF);
+										$this->SwitchLED(5, self::LED_OFF);
+										$this->SwitchLED(6, self::LED_OFF);
+									}
+								}
+								*/
 
 }
 
