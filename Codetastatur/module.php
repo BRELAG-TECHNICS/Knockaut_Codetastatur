@@ -64,7 +64,8 @@ class MaxFlexCodepanel extends IPSModule {
 			// Hole aus der Konfiguration den Timer interval und rechne in Millisekunden um.	
 				$timerintervalSecond = $this->ReadPropertyInteger("TimerInterval");
 				$timerintervalMillisecond = $timerintervalSecond * 1000;
-				$arrayConfigurationForm = IPS_GetConfigurationForm($securityInstanceId);
+				$arrayConfigurationFormJSON = IPS_GetConfigurationForm($securityInstanceId);
+				$arrayConfigurationForm = json_decode($arrayConfigurationFormJSON, true);
 
 			$value = $data->Values->Value;
 
