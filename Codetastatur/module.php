@@ -73,7 +73,6 @@ class MaxFlexCodepanel extends IPSModule {
 			if($command == 42) {
 				if($value > 0) {
 					$this->SetTimerInterval("ClearCodeTimer", $timerintervalMillisecond);
-					$typedCode = GetValue($this->GetIDForIdent("CODE"));
 					$codeOK = GetValue($this->GetIDForIdent("CODEOK"));
 					switch($value) {
 						case 1: // Nummer 1 und Aus
@@ -155,6 +154,7 @@ class MaxFlexCodepanel extends IPSModule {
 	}
 
 	private function TypeCode($number) {
+		$typedCode = GetValue($this->GetIDForIdent("CODE"));
 		$typedCode .= $number;
 		SetValue($this->GetIDForIdent("CODE"), $typedCode);
 	}
