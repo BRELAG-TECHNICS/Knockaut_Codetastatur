@@ -64,6 +64,7 @@ class MaxFlexCodepanel extends IPSModule {
 			// Hole aus der Konfiguration den Timer interval und rechne in Millisekunden um.	
 				$timerintervalSecond = $this->ReadPropertyInteger("TimerInterval");
 				$timerintervalMillisecond = $timerintervalSecond * 1000;
+				$arrayConfigurationForm = IPS_GetConfigurationForm($securityInstanceId);
 
 			$value = $data->Values->Value;
 
@@ -73,7 +74,7 @@ class MaxFlexCodepanel extends IPSModule {
 					$typedCode = GetValue($this->GetIDForIdent("CODE"));
 					$codeOK = GetValue($this->GetIDForIdent("CODEOK"));
 					switch($value) {
-						case 1:
+						case 1: // Nummer 1 und Aus
 							if($codeOK) {
 								SetValue($securityEnterPasswordId, $securityPassword);
 								SetValue($securityModus, 0);
@@ -82,28 +83,39 @@ class MaxFlexCodepanel extends IPSModule {
 								$this->SwitchLED(1, self::LED_ON);
 								$this->SwitchLED(2, self::LED_OFF);
 								$this->SwitchLED(3, self::LED_OFF);
+								//$this->SwitchLED(4, self::LED_OFF);
+								//$this->SwitchLED(5, self::LED_OFF);
+								//$this->SwitchLED(6, self::LED_OFF);
 							} else{
 								$typedCode .= 1;
 								SetValue($this->GetIDForIdent("CODE"), $typedCode);
 							}
 						break;
 	
-						case 2:
+						case 2: // Nummer 2 und Bereich 1
 							if($codeOK) {
 								SetValue($securityEnterPasswordId, $securityPassword);
-								SetValue($securityModus, 1);
+								foreach($arrayConfigurationForm as $configurationFormMode) {
+									if($configurationFormMode['value'] == 1) {
+										SetValue($securityModus, 1); // Change Mode
+										$this->SwitchLED(2, self::LED_ON);
+										$this->SwitchLED(1, self::LED_OFF);
+										$this->SwitchLED(3, self::LED_OFF);
+										//$this->SwitchLED(4, self::LED_OFF);
+										//$this->SwitchLED(5, self::LED_OFF);
+										//$this->SwitchLED(6, self::LED_OFF);
+									}
+								}
+								
 								SetValue($this->GetIDForIdent("CODE"), 0);
 								SetValue($this->GetIDForIdent("CODEOK"), false);
-								$this->SwitchLED(2, self::LED_ON);
-								$this->SwitchLED(1, self::LED_OFF);
-								$this->SwitchLED(3, self::LED_OFF);
 							} else{
 								$typedCode .= 2;
 								SetValue($this->GetIDForIdent("CODE"), $typedCode);
 							}
 						break;
 	
-						case 4:
+						case 4: // Nummer 3 und Bereich 2
 							if($codeOK) {
 								SetValue($securityEnterPasswordId, $securityPassword);
 								SetValue($securityModus, 2);
@@ -112,28 +124,30 @@ class MaxFlexCodepanel extends IPSModule {
 								$this->SwitchLED(3, self::LED_ON);
 								$this->SwitchLED(1, self::LED_OFF);
 								$this->SwitchLED(2, self::LED_OFF);
+								//$this->SwitchLED(4, self::LED_OFF);
+								//$this->SwitchLED(5, self::LED_OFF);
+								//$this->SwitchLED(6, self::LED_OFF);
 							} else{
 								$typedCode .= 3;
 								SetValue($this->GetIDForIdent("CODE"), $typedCode);
 							}
 						break;
 	
-						case 8:
-							$typedCode .= 4;
-							SetValue($this->GetIDForIdent("CODE"), $typedCode);
+						case 8: // Nummer 4
+								SetValue($this->GetIDForIdent("CODE"), $typedCode);
 						break;
 	
-						case 16:
-							$typedCode .= 5;
-							SetValue($this->GetIDForIdent("CODE"), $typedCode);
+						case 16: // Nummer 5
+								$typedCode .= 5;
+								SetValue($this->GetIDForIdent("CODE"), $typedCode);
 						break;
 	
-						case 32:
-							$typedCode .= 6;
-							SetValue($this->GetIDForIdent("CODE"), $typedCode);
+						case 32: // Nummer 6
+								$typedCode .= 6;
+								SetValue($this->GetIDForIdent("CODE"), $typedCode);
 						break;
 	
-						case 64:
+						case 64: // Enter
 							if($typedCode == $securityPassword) {
 								SetValue($this->GetIDForIdent("CODE"), 0);
 								SetValue($this->GetIDForIdent("CODEOK"), true);
@@ -146,7 +160,7 @@ class MaxFlexCodepanel extends IPSModule {
 							
 						break;
 	
-						case 128:
+						case 128: // delete
 							SetValue($this->GetIDForIdent("CODE"), 0);
 							SetValue($this->GetIDForIdent("CODEOK"), false);
 							$this->SetTimerInterval("ClearCodeTimer", 0);
