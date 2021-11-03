@@ -261,7 +261,6 @@ class MaxFlexCodepanel extends IPSModule {
 				$this->SwitchLED($LED, self::LED_ON);
 			}
 		}
-		$this->DeleteCode($securityEnterPasswordId);
 	}
 }
 
