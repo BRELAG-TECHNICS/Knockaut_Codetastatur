@@ -258,6 +258,8 @@ class MaxFlexCodepanel extends IPSModule {
 					$this->SwitchLED($buttonNumber, self::LED_OFF);
 				}
 				$this->SwitchLED($LED, self::LED_ON);
+			}else {
+				$this->DeleteCode();
 			}
 		}
 	}
