@@ -206,14 +206,18 @@ class MaxFlexCodepanel extends IPSModule {
 
         switch ($SenderID) {
             case $securityModusId:
-				/*foreach($arrayConfigurationFormMode as $arrayConfigurationFormModeValue) {
-					$currentSort = $arrayConfigurationFormModeValue['sort'];
-					$LEDnumber = $currentSort;
+				foreach($arrayConfigurationFormMode as $arrayConfigurationFormModeValue) {
 					if($arrayConfigurationFormModeValue['value'] == $securityModus) {
 						SetValue($this->GetIDForIdent("SECMODE"), $securityModus);
-						
+						$currentSort = $arrayConfigurationFormModeValue['sort'];
+						$LEDnumber = $currentSort;
+						$arrayLED = [1, 2, 3, 4, 5, 6];
+						foreach($arrayLED as $LED) {
+							$this->SwitchLED($LED, self::LED_OFF);
+						}
+						$this->SwitchLED($LEDnumber, self::LED_ON);
 					}
-				}*/
+				}
             break;
         }
     }
@@ -241,26 +245,14 @@ class MaxFlexCodepanel extends IPSModule {
 			if($configurationFormModeValue['sort'] == $sort) {
 				$modeValue = $configurationFormModeValue['value'];
 				SetValue($securityModus, $modeValue); // Change Mode
-				$arrayLED = [1, 2, 3, 4, 5, 6];
+				/*$arrayLED = [1, 2, 3, 4, 5, 6];
 				foreach($arrayLED as $LED) {
 					$this->SwitchLED($LED, self::LED_OFF);
 				}
-				$this->SwitchLED($LEDnumber, self::LED_ON);
+				$this->SwitchLED($LEDnumber, self::LED_ON); */
 			}
 		}
 	}
 }
-
-/*
-
-for($i = 1; $i <= 6 ; $i++){
-						if($i == $LEDnumber) {
-							$this->SwitchLED($LEDnumber, self::LED_ON);
-						} else {
-							$this->SwitchLED($LEDnumber, self::LED_OFF);
-						}
-					}
-
-*/
 
 ?>
