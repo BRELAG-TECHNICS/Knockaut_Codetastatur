@@ -2,8 +2,6 @@
   "elements":
   [
     { "type": "NumberSpinner", "name": "ID", "caption": "ID"},
-    { "type": "NumberSpinner", "name": "TimerInterval", "caption": "TimerInterval"},
-    { "type": "Label", "caption": "Tasten Verknüpfung" },
-    { "type": "SelectValue", "name": "Wert", "caption": "Wert", "variableID": 49040 }
+    { "type": "NumberSpinner", "name": "TimerInterval", "caption": "TimerInterval"}
   ]
 }
