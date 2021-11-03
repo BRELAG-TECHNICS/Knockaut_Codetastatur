@@ -253,11 +253,13 @@ class MaxFlexCodepanel extends IPSModule {
 			if($configurationFormModeValue['sort'] == $sort) {
 				$modeValue = $configurationFormModeValue['value'];
 				SetValue($securityModus, $modeValue); // Change Mode
-				$arrayLED = [1, 2, 3, 4, 5, 6];
-				foreach($arrayLED as $buttonNumber) {
-					$this->SwitchLED($buttonNumber, self::LED_OFF);
+				for($i = 1; $i <= 6 ; $i++){
+					if($i == $LED) {
+						$this->SwitchLED($LED, self::LED_ON);
+					} else {
+						$this->SwitchLED($buttonNumber, self::LED_OFF);
+					}
 				}
-				$this->SwitchLED($LED, self::LED_ON);
 			}
 		}
 	}
