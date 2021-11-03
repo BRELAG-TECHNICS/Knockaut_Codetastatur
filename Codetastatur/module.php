@@ -81,8 +81,7 @@ class MaxFlexCodepanel extends IPSModule {
 								$this->SetSecurityMode($securityEnterPasswordId, $securityPassword, $securityModus, $arrayConfigurationFormMode, 0, 1);
 								$this->DeleteCode($securityEnterPasswordId);
 							} else{
-								$typedCode .= 1;
-								SetValue($this->GetIDForIdent("CODE"), $typedCode);
+								$this->TypeCode(1);
 							}
 						break;
 	
@@ -91,8 +90,7 @@ class MaxFlexCodepanel extends IPSModule {
 								$this->SetSecurityMode($securityEnterPasswordId, $securityPassword, $securityModus, $arrayConfigurationFormMode, 1, 2);
 								$this->DeleteCode($securityEnterPasswordId);
 							} else{
-								$typedCode .= 2;
-								SetValue($this->GetIDForIdent("CODE"), $typedCode);
+								$this->TypeCode(2);
 							}
 						break;
 	
@@ -101,8 +99,7 @@ class MaxFlexCodepanel extends IPSModule {
 								$this->SetSecurityMode($securityEnterPasswordId, $securityPassword, $securityModus, $arrayConfigurationFormMode, 2, 3);
 								$this->DeleteCode($securityEnterPasswordId);
 							} else{
-								$typedCode .= 3;
-								SetValue($this->GetIDForIdent("CODE"), $typedCode);
+								$this->TypeCode(3);
 							}
 						break;
 	
@@ -111,8 +108,7 @@ class MaxFlexCodepanel extends IPSModule {
 								$this->SetSecurityMode($securityEnterPasswordId, $securityPassword, $securityModus, $arrayConfigurationFormMode, 3, 4);
 								$this->DeleteCode($securityEnterPasswordId);
 							} else{
-								$typedCode .= 4;
-								SetValue($this->GetIDForIdent("CODE"), $typedCode);
+								$this->TypeCode(4);
 							}
 						break;
 	
@@ -121,8 +117,7 @@ class MaxFlexCodepanel extends IPSModule {
 								$this->SetSecurityMode($securityEnterPasswordId, $securityPassword, $securityModus, $arrayConfigurationFormMode, 4, 5);
 								$this->DeleteCode($securityEnterPasswordId);
 							} else{
-								$typedCode .= 5;
-								SetValue($this->GetIDForIdent("CODE"), $typedCode);
+								$this->TypeCode(5);
 							}
 						break;
 	
@@ -131,8 +126,7 @@ class MaxFlexCodepanel extends IPSModule {
 								$this->SetSecurityMode($securityEnterPasswordId, $securityPassword, $securityModus, $arrayConfigurationFormMode, 5, 6);
 								$this->DeleteCode($securityEnterPasswordId);
 							} else{
-								$typedCode .= 6;
-								SetValue($this->GetIDForIdent("CODE"), $typedCode);
+								$this->TypeCode(6);
 							}
 						break;
 	
@@ -158,6 +152,11 @@ class MaxFlexCodepanel extends IPSModule {
 
 			
 		}
+	}
+
+	private function TypeCode($number) {
+		$typedCode .= $number;
+		SetValue($this->GetIDForIdent("CODE"), $typedCode);
 	}
 
 	public function SetClearCodeTimer() {
