@@ -98,8 +98,9 @@ class MaxFlexCodepanel extends IPSModule {
 							if($codeOK) {
 								SetValue($securityEnterPasswordId, $securityPassword);
 								foreach($arrayConfigurationFormMode as $configurationFormModeValue) {
-									if($configurationFormModeValue['value'] == 1) {
-										SetValue($securityModus, 1); // Change Mode
+									if($configurationFormModeValue['sort'] == 1) {
+										$modeValue = $configurationFormModeValue['value'];
+										SetValue($securityModus, $modeValue); // Change Mode
 										$this->SwitchLED(2, self::LED_ON);
 										$this->SwitchLED(1, self::LED_OFF);
 										$this->SwitchLED(3, self::LED_OFF);
@@ -120,8 +121,9 @@ class MaxFlexCodepanel extends IPSModule {
 							if($codeOK) {
 								SetValue($securityEnterPasswordId, $securityPassword);
 								foreach($arrayConfigurationFormMode as $configurationFormModeValue) {
-									if($configurationFormModeValue['value'] == 2) {
-										SetValue($securityModus, 2); // Change Mode
+									if($configurationFormModeValue['sort'] == 2) {
+										$modeValue = $configurationFormModeValue['value'];
+										SetValue($securityModus, $modeValue); // Change Mode
 										$this->SwitchLED(3, self::LED_ON);
 										$this->SwitchLED(1, self::LED_OFF);
 										$this->SwitchLED(2, self::LED_OFF);
@@ -142,8 +144,9 @@ class MaxFlexCodepanel extends IPSModule {
 							if($codeOK) {
 								SetValue($securityEnterPasswordId, $securityPassword);
 								foreach($arrayConfigurationFormMode as $configurationFormModeValue) {
-									if($configurationFormModeValue['value'] == 3) {
-										SetValue($securityModus, 2); // Change Mode
+									if($configurationFormModeValue['sort'] == 3) {
+										$modeValue = $configurationFormModeValue['value'];
+										SetValue($securityModus, $modeValue); // Change Mode
 										$this->SwitchLED(4, self::LED_ON);
 										$this->SwitchLED(1, self::LED_OFF);
 										$this->SwitchLED(2, self::LED_OFF);
@@ -164,8 +167,9 @@ class MaxFlexCodepanel extends IPSModule {
 							if($codeOK) {
 								SetValue($securityEnterPasswordId, $securityPassword);
 								foreach($arrayConfigurationFormMode as $configurationFormModeValue) {
-									if($configurationFormModeValue['value'] == 4) {
-										SetValue($securityModus, 2); // Change Mode
+									if($configurationFormModeValue['sort'] == 4) {
+										$modeValue = $configurationFormModeValue['value'];
+										SetValue($securityModus, $modeValue); // Change Mode
 										$this->SwitchLED(5, self::LED_ON);
 										$this->SwitchLED(1, self::LED_OFF);
 										$this->SwitchLED(2, self::LED_OFF);
@@ -186,8 +190,9 @@ class MaxFlexCodepanel extends IPSModule {
 							if($codeOK) {
 								SetValue($securityEnterPasswordId, $securityPassword);
 								foreach($arrayConfigurationFormMode as $configurationFormModeValue) {
-									if($configurationFormModeValue['value'] == 5) {
-										SetValue($securityModus, 2); // Change Mode
+									if($configurationFormModeValue['sort'] == 5) {
+										$modeValue = $configurationFormModeValue['value'];
+										SetValue($securityModus, $modeValue); // Change Mode
 										$this->SwitchLED(6, self::LED_ON);
 										$this->SwitchLED(1, self::LED_OFF);
 										$this->SwitchLED(2, self::LED_OFF);
