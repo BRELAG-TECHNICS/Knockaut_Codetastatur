@@ -25,9 +25,10 @@ class MaxFlexCodepanel extends IPSModule {
 
 		$this->ConnectParent("{1252F612-CF3F-4995-A152-DA7BE31D4154}"); //DominoSwiss eGate
 
-		$securityGUID = "{17433113-1A92-45B3-F250-B5E426040E64}";
+		/*$securityGUID = "{17433113-1A92-45B3-F250-B5E426040E64}";
 		$securityInstance = IPS_GetInstanceListByModuleID($securityGUID);
-		$securityInstanceId = $securityInstance[0];
+		$securityInstanceId = $securityInstance[0];*/
+		$securityInstanceId = $this->SecurityModuleInstanceID();
 		$securityModusId = IPS_GetObjectIDByIdent("Mode", $securityInstanceId);
 		$this->RegisterSecurityMode($securityModusId);
 		
@@ -37,6 +38,13 @@ class MaxFlexCodepanel extends IPSModule {
 		//Never delete this line!
 		parent::Destroy();
 		
+	}
+
+	public function SecurityModuleInstanceID() {
+		$securityGUID = "{17433113-1A92-45B3-F250-B5E426040E64}";
+		$securityInstance = IPS_GetInstanceListByModuleID($securityGUID);
+		$securityInstanceId = $securityInstance[0];
+		return $securityInstanceId;
 	}
 	
 	public function ApplyChanges() {
@@ -55,18 +63,20 @@ class MaxFlexCodepanel extends IPSModule {
 
 		if($id == $this->ReadPropertyInteger("ID")) {
 			// Hole das Passwort vom Alarmanlage Modul.
-				$securityGUID = "{17433113-1A92-45B3-F250-B5E426040E64}";
+				/*$securityGUID = "{17433113-1A92-45B3-F250-B5E426040E64}";
 				$securityInstance = IPS_GetInstanceListByModuleID($securityGUID);
-				$securityInstanceId = $securityInstance[0];
+				$securityInstanceId = $securityInstance[0];*/
+				$securityInstanceId = $this->SecurityModuleInstanceID();
 				$securityPassword = IPS_GetProperty($securityInstanceId, "Password");
 				$securityEnterPasswordId = IPS_GetObjectIDByIdent("Password", $securityInstanceId);
 				$securityModus = IPS_GetObjectIDByIdent("Mode", $securityInstanceId);
 			// Hole aus der Konfiguration den Timer interval und rechne in Millisekunden um.	
 				$timerintervalSecond = $this->ReadPropertyInteger("TimerInterval");
 				$timerintervalMillisecond = $timerintervalSecond * 1000;
-				$arrayConfigurationFormJSON = IPS_GetConfigurationForm($securityInstanceId);
+				/*$arrayConfigurationFormJSON = IPS_GetConfigurationForm($securityInstanceId);
 				$arrayConfigurationForm = json_decode($arrayConfigurationFormJSON, true);
-				$arrayConfigurationFormMode = $arrayConfigurationForm['elements'][2]['columns'][1]['edit']['options'];
+				$arrayConfigurationFormMode = $arrayConfigurationForm['elements'][2]['columns'][1]['edit']['options'];*/
+				$arrayConfigurationFormMode = $this->ArrayConfigurationFormMode($securityInstanceId);
 
 			$value = $data->Values->Value;
 
@@ -154,6 +164,13 @@ class MaxFlexCodepanel extends IPSModule {
 		}
 	}
 
+	private function ArrayConfigurationFormMode($securityInstanceId) {
+		$arrayConfigurationFormJSON = IPS_GetConfigurationForm($securityInstanceId);
+		$arrayConfigurationForm = json_decode($arrayConfigurationFormJSON, true);
+		$arrayConfigurationFormMode = $arrayConfigurationForm['elements'][2]['columns'][1]['edit']['options'];
+		return $arrayConfigurationFormMode;
+	}
+
 	private function TypeCode($number, $typedCode) {
 		$typedCode .= $number;
 		SetValue($this->GetIDForIdent("CODE"), $typedCode);
@@ -192,17 +209,19 @@ class MaxFlexCodepanel extends IPSModule {
 
 	public function MessageSink($TimeStamp, $SenderID, $Message, $Data)
     {
-        $securityGUID = "{17433113-1A92-45B3-F250-B5E426040E64}";
+        /*$securityGUID = "{17433113-1A92-45B3-F250-B5E426040E64}";
 		$securityInstance = IPS_GetInstanceListByModuleID($securityGUID);
-		$securityInstanceId = $securityInstance[0];
-		$securityEnterPasswordId = IPS_GetObjectIDByIdent("Password", $securityInstanceId);
+		$securityInstanceId = $securityInstance[0];*/
+		$securityInstanceId = $this->SecurityModuleInstanceID();
 		$securityModusId = IPS_GetObjectIDByIdent("Mode", $securityInstanceId);
 		$securityModus = GetValue($securityModusId);
 		$mode = GetValue($this->GetIDForIdent("SECMODE"));
 		
-		$arrayConfigurationFormJSON = IPS_GetConfigurationForm($securityInstanceId);
+		/*$arrayConfigurationFormJSON = IPS_GetConfigurationForm($securityInstanceId);
 		$arrayConfigurationForm = json_decode($arrayConfigurationFormJSON, true);
-		$arrayConfigurationFormMode = $arrayConfigurationForm['elements'][2]['columns'][1]['edit']['options'];
+		$arrayConfigurationFormMode = $arrayConfigurationForm['elements'][2]['columns'][1]['edit']['options'];*/
+
+		$arrayConfigurationFormMode = $this->ArrayConfigurationFormMode($securityInstanceId);
 
         switch ($SenderID) {
             case $securityModusId:
