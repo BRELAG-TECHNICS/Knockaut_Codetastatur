@@ -13,6 +13,7 @@ Benötigt das Knockaut Alarmanlagemodul als übergeordnete Instanz.
 * Liesst selbstständig der PIN vom Alarmanlagemodul aus
 * Einstellbarkeit der ID
 * Einstellbarkeit vom Zeitinterval für die Code Eingabe
+* Sortierung im Alarmanlage Modul definiert die Tastenbelegung. Beispiel: Sortierung 0 = Taste 1, Sortierung 5 = Taste 6 (Taste 7 + 8 reserviert).
 
 ### 2. Voraussetzungen
 
